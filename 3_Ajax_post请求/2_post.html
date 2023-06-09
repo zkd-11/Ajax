@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=, initial-scale=1.0" />
+    <title>AJAX post请求</title>
+
+    <style>
+      #result {
+        width: 200px;
+        height: 150px;
+        border: solid 1px #993;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="result"></div>
+
+    <script>
+      const result = document.getElementById("result");
+
+      result.addEventListener("mouseover", function () {
+        const xhr = new XMLHttpRequest();
+        xhr.open("post", "http://127.0.0.1:8000/server");
+        // xhr.send("1234");
+        // xhr.send("a=100&b=12");
+        xhr.send("a:100&b: 12");
+
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState === 4) {
+            if (xhr.status >= 200 && xhr.status < 300) {
+              result.innerHTML = xhr.response;
+            }
+          }
+        };
+      });
+    </script>
+  </body>
+</html>
