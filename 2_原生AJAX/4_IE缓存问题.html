@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IE缓存问题</title>
+
+    <style>
+      #result {
+        width: 200px;
+        height: 100px;
+        border: solid 1px #ccc;
+      }
+    </style>
+  </head>
+
+  <body>
+    <button>点击发送请求</button>
+    <div id="result"></div>
+
+    <script>
+      // 获取button元素
+      const btn = document.getElementsByTagName("button")[0];
+      const result = document.querySelector("#result");
+
+      //绑定事件
+      btn.addEventListener("click", function () {
+        const xhr = new XMLHttpRequest();
+        // 由于ie存在的一种本地缓存，无法将服务端的数据进行识别更新
+        //所以需要加 时间戳， ie会将每次识别为不同请求，发送
+        // xhr.open("GET", "http://127.0.0.1:8000/ie");
+
+        xhr.open("GET", "http://127.0.0.1:8000/ie?t=" + Date.now());
+        xhr.send();
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState == 4) {
+            if (xhr.status >= 200 && xhr.status < 300) {
+              result.innerHTML = xhr.response;
+            }
+          }
+        };
+      });
+    </script>
+  </body>
+</html>

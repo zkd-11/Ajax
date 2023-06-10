@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>axios发送ajax请求</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/axios/1.3.6/axios.min.js"></script>
+  </head>
+  <body>
+    <h2>axios发送Ajax请求</h2>
+    <button>Get</button>
+    <button>post</button>
+    <button>通用方法</button>
+
+    <script>
+      const btns = document.querySelectorAll("button");
+
+      // 配置 baseURL
+      axios.defaults.baseURL = "http://localhost:8000";
+      btns[0].onclick = function () {
+        axios
+          .get("/axios-server", {
+            // url参数
+            params: {
+              id: 100,
+              vip: 7,
+            },
+            //   请求头信息
+            headers: {
+              name: "aa",
+              age: 20,
+            },
+          })
+          .then((value) => {
+            console.log(value.data);
+          });
+      };
+      btns[1].onclick = function () {
+        axios
+          .post(
+            "/axios-server",
+            //第二个参数为请求体， 发送的为json数据
+            {
+              username: "admin",
+              password: "password",
+            },
+            // 第三个参数为其它配置
+            {
+              // url参数
+              params: {
+                id: 100,
+                vip: 7,
+              },
+              //   请求头信息
+              headers: {
+                height: 170,
+                width: 100,
+              },
+            }
+          )
+          .then((value) => {
+            console.log(value.data);
+          });
+      };
+
+      btns[2].onclick = () => {
+        axios({
+          method: "POST",
+          url: "/axios-server",
+          params: {
+            vip: 10,
+            level: 99,
+          },
+          //   头信息
+          headers: {
+            a: 11,
+            b: 22,
+          },
+          // 请求体参数
+          data: {
+            username: "韩绝",
+            password: "123",
+          },
+        }).then((value) => {
+          console.log(value);
+          console.log(value.status);
+          console.log(value.statusText);
+          console.log(value.data);
+        });
+      };
+    </script>
+  </body>
+</html>

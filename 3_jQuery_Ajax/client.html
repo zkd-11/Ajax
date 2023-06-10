@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>jquery 发送ajax请求</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  </head>
+
+  <body>
+    <h2>jquery发送Ajax请求</h2>
+    <button>Get</button>
+    <button>post</button>
+    <button>通用ajax请求</button>
+
+    <script>
+      // const btns = Element.querySelectorAll('button');
+      $("button")
+        .eq(0)
+        .click(function () {
+          $.get(
+            "http://localhost:8000/jquery-server",
+            { a: 100, b: 200 },
+            function (data) {
+              console.log(data);
+            }
+          );
+        });
+
+      $("button")
+        .eq(1)
+        .click(function () {
+          $.post(
+            "http://localhost:8000/jquery-server",
+            { a: 100, b: 200 },
+            function (data) {
+              console.log(data);
+            },
+            "json"
+          );
+        });
+
+      // ajax请求
+      $("button")
+        .eq(2)
+        .click(function () {
+          $.ajax({
+            url: "http://localhost:8000/jquery-ordinary",
+            data: { a: 100, b: 100, c: 100 },
+            type: "get",
+            // 成功回调
+            dataType: "json",
+            success: function (data) {
+              //   let d = JSON.parse(data);
+              console.log(data);
+            },
+            // 请求时间
+            timeout: 2000,
+            // 失败回调
+            error: () => {
+              console.log("出错！");
+            },
+            headers: {
+              c: 300,
+              d: 200,
+            },
+          });
+        });
+    </script>
+  </body>
+</html>
